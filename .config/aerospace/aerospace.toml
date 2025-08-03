@@ -105,16 +105,16 @@ alt-shift-minus = 'resize smart -50'
 alt-shift-equal = 'resize smart +50'
 
 # See: https://nikitabobko.github.io/AeroSpace/commands#workspace
-alt-0 = ['exec-and-forget open -a "Apifox"', 'workspace 0'] # 启动 Apifox 并切换到工作区 0
+alt-0 = 'workspace 0'
 alt-1 = 'workspace 1'
 alt-2 = ['exec-and-forget open -a "Cherry Studio"', 'workspace 2'] # 启动 Cherry Studio 并切换到工作区 2
 alt-3 = 'workspace 3'
 alt-4 = 'workspace 4'
 alt-5 = 'workspace 5'
 alt-6 = 'workspace 6'
-alt-7 = 'workspace 7'
-alt-8 = ['exec-and-forget open -a "Trae"', 'workspace 8'] # 启动 Trae 并切换到工作区 8
-alt-9 = ['exec-and-forget open -a "WebStorm"', 'workspace 9'] # 启动 WebStorm 并切换到工作区 9
+alt-7 = ['exec-and-forget open -a "Trae"', 'workspace 7'] # 启动 Trae 并切换到工作区 7
+alt-8 = ['exec-and-forget open -a "WebStorm"', 'workspace 8'] # 启动 WebStorm 并切换到工作区 8
+alt-9 = ['exec-and-forget open -a "Apifox"', 'workspace 9'] # 启动 Apifox 并切换到工作区 9
 # alt-a = 'workspace A'
 alt-b = 'workspace B'
 # alt-c = 'workspace C'
@@ -197,46 +197,38 @@ alt-shift-j = ['join-with down', 'mode main']
 alt-shift-k = ['join-with up', 'mode main']
 alt-shift-l = ['join-with right', 'mode main']
 
-# 微信主窗口配置 - 微信主聊天窗口平铺显示并移动到W工作区
-# WeChat main window - main chat window should be tiled and moved to W workspace
+# 微信配置 - 所有微信窗口都浮动显示并移动到W工作区
+# WeChat configuration - all WeChat windows float and move to W workspace
 [[on-window-detected]]
 if.app-id = 'com.tencent.xinWeChat'
-if.window-title-regex-substring = '^(WeChat \(Chats\)|微信 \(聊天\)|微信)$'
-run = ['layout tiling', 'move-node-to-workspace W']
+run = ['layout floating', 'move-node-to-workspace W']
 
-# 微信其他窗口配置 - 除主窗口外的所有微信窗口都浮动显示
-# WeChat other windows - all other WeChat windows should float
-[[on-window-detected]]
-if.app-id = 'com.tencent.xinWeChat'
-if.window-title-regex-substring = '^(?!WeChat \(Chats\)|微信 \(聊天\)|微信).*$'
-run = 'layout floating'
-
-# JetBrains IDEs 自动分配到工作区 9
-# JetBrains IDEs auto-assignment to workspace 9
+# JetBrains IDEs 自动分配到工作区 8
+# JetBrains IDEs auto-assignment to workspace 8
 
 # 通过应用名称匹配所有 JetBrains 应用（更简洁的方式）
 # Match all JetBrains applications by app name (more concise approach)
 [[on-window-detected]]
 if.app-name-regex-substring = '(WebStorm|IntelliJ IDEA|PyCharm|PhpStorm|RubyMine|CLion|GoLand|DataGrip|Rider|Fleet|RustRover)'
-run = 'move-node-to-workspace 9'
+run = 'move-node-to-workspace 8'
 
 # Android Studio (Google 开发，但常与 JetBrains IDEs 一起使用)
 # Android Studio (developed by Google, but commonly used with JetBrains IDEs)
 [[on-window-detected]]
 if.app-id = 'com.google.android.studio'
-run = 'move-node-to-workspace 9'
+run = 'move-node-to-workspace 8'
 
-# Apifox 自动分配到工作区 0
-# Apifox auto-assignment to workspace 0
+# Apifox 自动分配到工作区 9
+# Apifox auto-assignment to workspace 9
 [[on-window-detected]]
 if.app-name-regex-substring = 'Apifox'
-run = 'move-node-to-workspace 0'
+run = 'move-node-to-workspace 9'
 
-# Trae 相关应用自动分配到工作区 8
-# Trae related applications auto-assignment to workspace 8
+# Trae 相关应用自动分配到工作区 7
+# Trae related applications auto-assignment to workspace 7
 [[on-window-detected]]
 if.app-name-regex-substring = '(Trae|trae)'
-run = 'move-node-to-workspace 8'
+run = 'move-node-to-workspace 7'
 
 # Cherry Studio 自动分配到工作区 2
 # Cherry Studio auto-assignment to workspace 2
@@ -288,3 +280,17 @@ run = 'layout floating'
 [[on-window-detected]]
 if.app-name-regex-substring = '(Postman|Insomnia|Paw|RapidAPI|HTTPie|REST Client|API Tester|Simulator|Xcode Simulator|Android Emulator|Docker Desktop|Kubernetes Dashboard|TablePlus|Sequel Pro|DB Browser|MongoDB Compass|Redis Desktop Manager|Robo 3T)'
 run = 'layout floating'
+
+# 🚫 彻底解决平铺问题 - 通用浮动规则 🚫
+# 🚫 Complete solution for tiling issues - Universal floating rule 🚫
+
+# 让所有应用默认浮动（除了极少数特殊情况）
+# Make all applications default to floating (except for very few special cases)
+[[on-window-detected]]
+if.app-name-regex-substring = '.*'
+run = 'layout floating'
+
+# 注意：这个通用规则会让所有应用都浮动
+# 如果您希望某些特定应用使用平铺模式，可以在上面添加更具体的规则
+# Note: This universal rule will make all apps floating
+# If you want specific apps to use tiling, add more specific rules above
